@@ -1,0 +1,69 @@
+.globl main
+
+.data 0x10000040
+prompt: .asciiz "Would you like to continue? y or n?"
+	# Your prompts and string pointing to the user entered
+	# data goes here.
+.text
+main:	
+
+    #initializing response y 
+    addi $t6, $0, 0x79
+
+    #initializing response n
+    addi $t7, $0, 0x6E
+
+    #giving a1 an address
+    lui $a1, 0x1000
+    addi $a1, $a1, 0x0080
+
+    #Calling GetCode
+    jal GetCode
+    add $0, $0, $0
+    
+    #giving a1 an address
+    lui $a1, 0x1000
+    addi $a1, $a1, 0x0080
+    #Calling GetOnes 
+    jal GetOnes
+    add $0, $0, $0
+    
+    #Printing out the counter 
+    add $a0, $v0, $0
+    addi $v0, $0, 1
+    add $0, $0, $0
+    syscall
+
+    #Printing out the prompt
+    addi $v0, $0, 4
+	lui $a0, 0x1000
+    ori $a0, $a0, 0x0040       
+	syscall
+
+    #read and lb 
+    lui $a0, 0x1000
+    ori $a0, $a0, 0x0050
+    addi $a1, $0,100
+    addi $v0, $0, 8
+    syscall
+
+    lb $t4, ($a0)
+    add $0, $0,$0
+
+    #checking whether or not the response is equal to Y or N. 
+loop:
+    #lb $t4, ($a0)
+    beq $t4, $t6, main
+    add $0, $0, $0
+    beq $t4, $t7, done
+    add $0, $0, $0
+    j loop
+
+done:	
+    #jr $ra
+    #add $0, $0,$0
+    #or $0, $0, $0
+
+    addi $v0, $0, 10
+    syscall 
+    add $0,$0,$0
