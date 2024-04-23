@@ -415,4 +415,4 @@ Turn7To4:
 
 done:
     jr $ra
-    add $0, $0,$0timberlake {~} > 
+    add $0, $0,$0
