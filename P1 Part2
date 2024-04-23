@@ -1,0 +1,54 @@
+#.globl main
+.globl PrintName
+.data
+name: .asciiz "Jessenta"
+.text
+#main:
+   
+PrintName:# Your PrintName routine goes here	
+    addi $v0, $0, 4
+    lui $a0, 0x1000
+    add $0, $0, $0
+    syscall
+
+    jr $ra
+    add $0, $0,$0timberlake {~} > cat project_1_part_2.s
+#.globl main
+.globl GetCode
+
+.data 0x10000000
+prompt: .asciiz "Enter a 7 bit code consisting of ones and zeros"
+#a0:0x10000040
+#a1:100
+.text
+
+#main:
+    #lui $a0, 0x1000
+    #addi $a1, $a0, 0x0040
+    #addi $a1, $a0, $a0
+
+    #jal GetCode
+    #add $0, $0,$0
+
+    #addi $v0, $0, 0xA
+    #syscall
+
+#lui $a1, 0x1000
+#addi $a1, $a1, 0xC
+
+GetCode:	# Your GetCode routine goes here
+
+    addi $v0, $0, 4
+	lui $a0, 0x1000        
+	syscall
+
+ #read string a0,a1
+    add $a0, $a1, $0
+    addi $a1, $0,100
+    addi $v0, $0, 8
+    syscall
+
+    sb $0,7($a0) # overwriting enter key or use beq
+
+    jr $ra
+    add $0, $0,$0
